@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
@@ -67,6 +69,16 @@ User user=createValiduser();
         User user=createValiduser();
         testRestTemplate.postForEntity(API_1_0_USERS, user, Object.class);
         assertEquals(userRepository.count(),1);
+
+    }
+    @Test
+    public void postUser_whenUserIsValid_passwordHashedInDatabase(){
+        User user=createValiduser();
+        testRestTemplate.postForEntity(API_1_0_USERS, user, Object.class);
+        List<User> users = userRepository.findAll();
+        User user1 = users.get(0);
+        assertEquals(user1.getPassword(),user.getPassword());
+
 
     }
 }

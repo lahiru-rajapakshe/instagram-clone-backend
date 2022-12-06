@@ -1,5 +1,6 @@
 package com.instagram.instagram.user;
 
+import com.instagram.instagram.shared.GenericResponse;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -39,6 +40,16 @@ public class UserControllerTest {
 User user=createValiduser();
         ResponseEntity<Object> responce = testRestTemplate.postForEntity(API_1_0_USERS, user, Object.class);
         assertEquals(responce.getStatusCode(), HttpStatus.OK);
+
+
+    }
+
+    @Test
+    public void postUser_whenUserIsValid_recieveSuccessMessage() {
+
+        User user=createValiduser();
+        ResponseEntity<GenericResponse> responce = testRestTemplate.postForEntity(API_1_0_USERS, user, GenericResponse.class);
+        assertEquals(responce.getBody().getMessage(),null);
 
 
     }
